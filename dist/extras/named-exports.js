@@ -12,6 +12,8 @@
   var systemRegister = systemJSPrototype.register;
   systemJSPrototype.register = function (name, deps, declare) {
     lastRegisterDeclare = typeof name === 'string' ? declare : deps;
+    // The js file compiled from tsc has not endwith .js, so this will make a error in browser
+    if(Array.isArray(name)) name.forEach((e, i, a)=>{if(e.includes("./")) a[i]=e+".js";});
     systemRegister.apply(this, arguments);
   };
 
